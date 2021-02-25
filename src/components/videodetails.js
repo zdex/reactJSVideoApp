@@ -69,7 +69,7 @@ class VideoDetail extends Component {
                 <div className="embed-responsive embed-responsive-16by9">
                     <iframe className="embed-responsive-item" src={this.state.url}></iframe>
                 </div>
-                <div className="detail">
+                <div className="details">
                     <div>{this.state.title}</div>
                     <div>{this.state.description}</div>
                 </div>

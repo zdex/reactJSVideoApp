@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 import SearchBar from './components/searchbar';
@@ -5,8 +6,8 @@ import YTSearch from 'youtube-api-search';
 import VideoList from './components/videolist';
 import VideoDetail from './components/videodetails';
 
-//const APO_KEY = 'AIzaSyDnJgwMIIXUgrwlWcIsA2LAQBVmdIE4UJ4'; //gmaheshwari2006
-const APO_KEY = 'AIzaSyBVoQJbbdXjzx9AuwPId7rH__v-qvK0iTE' //gauravautumn
+const APO_KEY = 'AIzaSyDnJgwMIIXUgrwlWcIsA2LAQBVmdIE4UJ4'; //gmaheshwari2006
+//const APO_KEY = 'AIzaSyBVoQJbbdXjzx9AuwPId7rH__v-qvK0iTE' //gauravautumn
 
 /*YTSearch({ key: APO_KEY, term: 'Ripple,xrp' }, function (data) {
     console.log(data);
@@ -27,20 +28,22 @@ class App extends Component { // here App is the component class
         };
         this.onVideoSelect = this.onVideoSelect.bind(this);
         this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
-        YTSearch({ key: APO_KEY, term: 'Ripple,xrp' }, (videos) => {
+        this.videoSearch("blockchain");
+    }
+
+    videoSearch(term) {
+        YTSearch({ key: APO_KEY, term: term }, (videos) => {
             console.log("React videos: " + JSON.stringify(videos));
             //this.setState({videos: videos});
             this.setState({
                 videos: videos,
                 selectedVideo: videos[0]
-            });
+            });                       
         });
     }
-
     onVideoSelect = (selectedVideo) => {
-        this.setState({ selectedVideo: selectedVideo }, () => {
-            console.log("new Video id is from state: " + this.state.selectedVideo.id.videoId);
-           
+        this.setState({selectedVideo: selectedVideo }, () => {
+            console.log("new Video id is from state: " + this.state.selectedVideo.id.videoId);           
         });
     }
 
@@ -49,8 +52,10 @@ class App extends Component { // here App is the component class
       };
 
     render() {
+        const debounceVideoSearch = _.debounce((term)=>{this.videoSearch(term)}, 1000);
         return <div>
-            <SearchBar />
+            
+            <SearchBar onSearch={debounceVideoSearch} />
             {this.state.selectedVideo != null ? (<VideoDetail video={this.state.selectedVideo} />) : ('Loading the video.....')}
             <VideoList
                 onVideoSelect={this.onVideoSelect}
@@ -61,11 +66,12 @@ class App extends Component { // here App is the component class
 // 2. put this generated HTML in the DOM
 //{this.state.selectedVideo != null? (<VideoDetail video={this.state.selectedVideo}/>): ('Loading the video.....')}
 
-
+//export default App
 
 ReactDom.render(<App />, document.querySelector('.container')); //<App /> is the instance of App component class
 
 /**
+ * <SearchBar onSearch={term => {this.videoSearch(term)}} />
  * selectedVideo => {
                    debugger
                     console.log("set new video");

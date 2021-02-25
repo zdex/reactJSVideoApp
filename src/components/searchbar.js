@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import ReactDom from 'react-dom';
 
 /*
@@ -15,32 +15,51 @@ class SearchBar extends Component {
         super(props);
 
         this.state = {
-            input1: ''
-        }; 
+            term: ''
+        };
     }
     render() {
-       // return <input onChange={this.onInputChange}/>;
-       return ( 
-        <div>
-        <input
-        value={this.state.input1}
-        onChange={event => {
-           console.log('changes: ' + event.target.value);
-           this.setState({
-            input1: event.target.value
-           });
-           }
-        }/>
-        value of input 1 is: {this.state.input1}
-       
-        </div>
-        
-        
-        );
+        // return <input onChange={this.onInputChange}/>;
+        return (
+            <div className="search-bar">
+                <input
+                    value={this.state.input1}
+                    onChange={event => {
+                        console.log('changes: ' + event.target.value);
+                        this.setState({
+                            term: event.target.value
+                        });
+                        this.onInputChange(event.target.value);
+                    }
+                    } />
+                    <div>
+                        <button onClick={this.search.bind(this)}>Search Button</button>
+                    </div>      
+                    
+            </div>
+            
+        );      
     }
 
-   /* onInputChange(event) {
-        console.log('changes: ' + event.target.value);
-    }*/
+    onInputChange(term) {
+        this.setState({term});
+        this.props.onSearch(term);
+    }
+
+    search() {
+        this.props.onSearch(this.state.term);
+    }
+
+    /* onInputChange(event) {
+         console.log('changes: ' + event.target.value);
+     }*/
 }
 export default SearchBar;
+
+/**
+ * 
+ * <div>
+                        <button onClick={this.search.bind(this)}>Search Button</button>
+                    </div>
+
+ */
