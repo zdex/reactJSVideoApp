@@ -6,8 +6,8 @@ import YTSearch from 'youtube-api-search';
 import VideoList from './components/videolist';
 import VideoDetail from './components/videodetails';
 
-const APO_KEY = 'AIzaSyDnJgwMIIXUgrwlWcIsA2LAQBVmdIE4UJ4'; //gmaheshwari2006
-//const APO_KEY = 'AIzaSyBVoQJbbdXjzx9AuwPId7rH__v-qvK0iTE' //gauravautumn
+const APO_KEY = ''; //gmaheshwari2006
+//const APO_KEY = '' //gauravautumn
 
 /*YTSearch({ key: APO_KEY, term: 'Ripple,xrp' }, function (data) {
     console.log(data);
